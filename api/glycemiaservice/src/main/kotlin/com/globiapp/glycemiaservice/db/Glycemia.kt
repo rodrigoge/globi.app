@@ -8,7 +8,7 @@ import java.time.OffsetDateTime
 data class Glycemia(
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long,
 
     @Column(name = "glycemic_index", nullable = false)
