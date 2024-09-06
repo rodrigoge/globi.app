@@ -1,0 +1,30 @@
+version: "3"
+services:
+  postgres-container:
+    command:
+      - postgres
+    container_name: postgres-container
+    entrypoint:
+      - docker-entrypoint.sh
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/postgresql/16/bin
+      - GOSU_VERSION=1.17
+      - LANG=en_US.utf8
+      - PG_MAJOR=16
+      - PG_VERSION=16.4-1.pgdg120+1
+      - PGDATA=/var/lib/postgresql/data
+    hostname: a8c957a97872
+    image: postgres
+    ipc: private
+    logging:
+      driver: json-file
+      options: {}
+    mac_address: 02:42:ac:11:00:02
+    networks:
+      - bridge
+    ports:
+      - 5432:5432/tcp
+networks:
+  bridge:
+    external: true
