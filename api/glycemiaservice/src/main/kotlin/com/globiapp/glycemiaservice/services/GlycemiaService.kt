@@ -27,9 +27,20 @@ class GlycemiaService(val glycemiaRepository: GlycemiaRepository) {
                 "Invalid glycemic index, please type again"
             )
         if (glycemia.data.isAfter(OffsetDateTime.now()))
-            throw CustomException(HttpStatus.BAD_REQUEST, LocalDateTime.now(), "Invalid data, please type again")
+            throw CustomException(HttpStatus.BAD_REQUEST, LocalDateTime.now(), "Invalid date, please type again")
         val glycemiaResponse = glycemiaRepository.save(glycemia)
         logger.info("GlycemiaService.registerGlycemia - finishing register of glycemia")
         return glycemiaResponse
+    }
+
+    fun getGlycemias(date: OffsetDateTime): List<Glycemia> {
+        logger.info("GlycemiaService.getGlycemias - initializing get glycemias")
+        if (date.isAfter(OffsetDateTime.now()))
+            throw CustomException(HttpStatus.BAD_REQUEST, LocalDateTime.now(), "Invalid date, please type again")
+        val startOfDay = date.withHour(0).withMinute(0).withSecond(0).withNano(0)
+        val endOfDay = date.withHour(23).withMinute(59).withSecond(59).withNano(999999999)
+        val glycemiasResponse = glycemiaRepository.findAllByDataBetween(startOfDay, endOfDay)
+        logger.info("GlycemiaService.getGlycemias - finishing get glycemias")
+        return glycemiasResponse
     }
 }
