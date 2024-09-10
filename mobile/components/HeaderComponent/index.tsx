@@ -1,13 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native';
 import Logo from '../../assets/images/logo.svg';
-import { useFonts, Manrope_400Regular, Manrope_700Bold } from '@expo-google-fonts/manrope';
+import colors from '@/colors';
 
 export default function HeaderComponent() {
-    let [fontsLoaded] = useFonts({
-        Manrope_400Regular,
-        Manrope_700Bold,
-    });
-
     return (
         <View style={styles.container}>
             <Logo width={30} height={30} />
@@ -32,7 +27,8 @@ const styles = StyleSheet.create({
         height: 30
     },
     text: {
-        fontFamily: 'Manrope_700Bold',
-        fontSize: 20
+        fontSize: 20,
+        fontWeight: '600',
+        color: colors.black
     }
 })

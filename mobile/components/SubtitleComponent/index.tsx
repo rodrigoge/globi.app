@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet } from "react-native";
-import { useFonts, Manrope_500Medium } from '@expo-google-fonts/manrope';
+import colors from '@/colors';
 
 export default function SubtitleComponent({
     children
@@ -14,7 +14,6 @@ export default function SubtitleComponent({
 
 const styles = StyleSheet.create({
     title: {
-        fontFamily: 'Manrope_500ExtraBold',
         fontSize: 16,
         fontWeight: "500",
         display: 'flex',
@@ -22,6 +21,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         paddingLeft: 16,
-        marginTop: 0
+        marginTop: 0,
+        color: colors.black
     }
 })
