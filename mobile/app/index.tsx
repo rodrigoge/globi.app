@@ -6,7 +6,9 @@ import TitleComponent from '@/components/TitleComponent';
 import { useFonts } from '@expo-google-fonts/manrope';
 import { SplashScreen } from 'expo-router';
 import { useEffect } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import ButtonComponent from '@/components/ButtonComponent';
+import FooterComponent from '@/components/FooterComponent';
 
 export default function HomeScreen() {
   const [loaded] = useFonts({
@@ -24,14 +26,22 @@ export default function HomeScreen() {
   }
 
   return (
-    <View>
+    <View style={styles.modal}>
       <HeaderComponent />
       <View>
         <TitleComponent children="Cadastro Glicêmico" />
         <SubtitleComponent children="Por favor, preencha o índice glicêmico e a data de registro." />
         <InputNumberComponent children="Índice Glicêmico" />
         <InputMaskedComponent children="Data" />
+        <ButtonComponent children="Cadastrar" />
       </View>
+      <FooterComponent />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  modal: {
+    height: '100%'
+  }
+})
