@@ -4,21 +4,31 @@ import { TextInputMask } from 'react-native-masked-text';
 import colors from "@/colors";
 
 export default function InputMaskedComponent({
-    children
-}: React.PropsWithChildren<{}>
+    children,
+    value,
+    onChange
+}: React.PropsWithChildren<{ value: string, onChange: (value: string) => void }>
 ) {
     const [date, setDate] = useState('');
 
     useEffect(() => {
         const getCurrentDate = () => {
-            const currentDate = new Date()
+            const currentDate = new Date();
             const day = String(currentDate.getDate()).padStart(2, '0');
             const month = String(currentDate.getMonth() + 1).padStart(2, '0');
             const year = currentDate.getFullYear();
-            return `${day}/${month}/${year}`
+            return `${day}/${month}/${year}`;
+        };
+        setDate(getCurrentDate());
+    }, []);
+
+    const handleChange = (text: string) => {
+        const [day, month, year] = text.split('/').map(Number);
+        if (day && month && year) {
+            const isoDate = new Date(Date.UTC(year, month - 1, day)).toISOString();
+            onChange(isoDate);
         }
-        setDate(getCurrentDate())
-    })
+    };
 
     return (
         <View style={styles.field}>
@@ -29,12 +39,12 @@ export default function InputMaskedComponent({
                     format: 'DD/MM/YYYY',
                 }}
                 style={styles.input}
-                value={date}
-                onChangeText={text => setDate(text)}
-                placeholder="DD/MM/YYYY"
+                value={value ? value.slice(0, 10).split('-').reverse().join('/') : ''}
+                onChangeText={handleChange}
+                placeholder={date}
             />
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -64,4 +74,4 @@ const styles = StyleSheet.create({
         color: colors.black,
         fontSize: 16
     }
-})
+});

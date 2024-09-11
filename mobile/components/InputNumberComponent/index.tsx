@@ -1,16 +1,16 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import colors from "@/colors";
-import { useState } from "react";
 
 export default function InputNumberComponent({
-    children
-}: React.PropsWithChildren<{}>
+    children,
+    value,
+    onChange
+}: React.PropsWithChildren<{ value: string, onChange: (value: string) => void }>
 ) {
-    const [inputValue, setInputValue] = useState('');
 
-    const handleInputChange = (text: String) => {
+    const handleInputChange = (text: string) => {
         const numericValue = text.replace(/[^0-9]/g, '');
-        setInputValue(numericValue);
+        onChange(numericValue);
     };
 
     return (
@@ -20,7 +20,7 @@ export default function InputNumberComponent({
                 style={styles.input}
                 keyboardType="numeric"
                 maxLength={3}
-                value={inputValue}
+                value={value}
                 onChangeText={handleInputChange}
             />
         </View>

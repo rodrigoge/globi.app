@@ -1,17 +1,19 @@
 import colors from "@/colors";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import '@/interfaces/ButtonComponentProps'
+import { ButtonComponentProps } from "@/interfaces/ButtonComponentProps";
 
 export default function ButtonComponent({
-    children
-}: React.PropsWithChildren<{}>
-) {
+    children,
+    onPress,
+}: ButtonComponentProps) {
     return (
         <View style={styles.modal}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={onPress}>
                 <Text style={styles.title}>{children}</Text>
             </TouchableOpacity>
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
