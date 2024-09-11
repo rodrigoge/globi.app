@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import ButtonComponent from '@/components/ButtonComponent';
 import FooterComponent from '@/components/FooterComponent';
-import { getData, postData } from '@/service/api';
+import { postData } from '@/service/api';
 
 export default function HomeScreen() {
   const [loaded] = useFonts({
@@ -27,9 +27,7 @@ export default function HomeScreen() {
 
   const handleSendData = async () => {
     try {
-      console.log("Enviando dados...");
-      const result = await postData('/glycemias', { glycemicIndex: parseInt(glycemicIndex), data: date });
-      console.log('Resposta do POST:', result);
+      await postData('/glycemias', { glycemicIndex: parseInt(glycemicIndex), data: date });
     } catch (error) {
       console.error('Erro ao enviar dados:', error);
     }
