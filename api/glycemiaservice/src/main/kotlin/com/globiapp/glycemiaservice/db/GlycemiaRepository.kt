@@ -4,5 +4,5 @@ import org.springframework.data.repository.CrudRepository
 import java.time.OffsetDateTime
 
 interface GlycemiaRepository : CrudRepository<Glycemia, Long> {
-    fun findAllByDataBetween(startDate: OffsetDateTime, endDate: OffsetDateTime): List<Glycemia>
+    fun findAllByCreationDateBetween(startDate: OffsetDateTime, endDate: OffsetDateTime): List<Glycemia>
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service
 import org.springframework.util.ObjectUtils
 import java.time.LocalDateTime
 import java.time.OffsetDateTime
+import java.time.ZonedDateTime
 
 @Service
 class GlycemiaService(val glycemiaRepository: GlycemiaRepository) {
@@ -18,7 +19,7 @@ class GlycemiaService(val glycemiaRepository: GlycemiaRepository) {
 
     fun registerGlycemia(glycemia: Glycemia): Glycemia {
         logger.info("GlycemiaService.registerGlycemia - initializing register of glycemia")
-        if (ObjectUtils.isEmpty(glycemia.glycemicIndex) || ObjectUtils.isEmpty(glycemia.data))
+        if (ObjectUtils.isEmpty(glycemia.glycemicIndex) || ObjectUtils.isEmpty(glycemia.creationDate))
             throw CustomException(HttpStatus.BAD_REQUEST, LocalDateTime.now(), "Glycemic index cannot be empty")
         if (glycemia.glycemicIndex > 999)
             throw CustomException(
@@ -26,7 +27,7 @@ class GlycemiaService(val glycemiaRepository: GlycemiaRepository) {
                 LocalDateTime.now(),
                 "Invalid glycemic index, please type again"
             )
-        if (glycemia.data.isAfter(OffsetDateTime.now()))
+        if (glycemia.creationDate.isAfter(ZonedDateTime.now()))
             throw CustomException(HttpStatus.BAD_REQUEST, LocalDateTime.now(), "Invalid date, please type again")
         val glycemiaResponse = glycemiaRepository.save(glycemia)
         logger.info("GlycemiaService.registerGlycemia - finishing register of glycemia")
@@ -39,7 +40,7 @@ class GlycemiaService(val glycemiaRepository: GlycemiaRepository) {
             throw CustomException(HttpStatus.BAD_REQUEST, LocalDateTime.now(), "Invalid date, please type again")
         val startOfDay = date.withHour(0).withMinute(0).withSecond(0).withNano(0)
         val endOfDay = date.withHour(23).withMinute(59).withSecond(59).withNano(999999999)
-        val glycemiasResponse = glycemiaRepository.findAllByDataBetween(startOfDay, endOfDay)
+        val glycemiasResponse = glycemiaRepository.findAllByCreationDateBetween(startOfDay, endOfDay)
         logger.info("GlycemiaService.getGlycemias - finishing get glycemias")
         return glycemiasResponse
     }

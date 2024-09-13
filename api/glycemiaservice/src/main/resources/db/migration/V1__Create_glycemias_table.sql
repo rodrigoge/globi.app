@@ -1,5 +1,5 @@
 CREATE TABLE glycemias (
     id BIGSERIAL PRIMARY KEY,
     glycemic_index INT NOT NULL,
-    data TIMESTAMP WITH TIME ZONE NOT NULL
+    creation_date TIMESTAMP NOT NULL
 );
