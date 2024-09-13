@@ -10,6 +10,7 @@ import { StyleSheet, View } from 'react-native';
 import ButtonComponent from '@/components/ButtonComponent';
 import FooterComponent from '@/components/FooterComponent';
 import { postData } from '@/service/api';
+import ToastManager, { Toast } from 'toastify-react-native'
 
 export default function HomeScreen() {
   const [loaded] = useFonts({
@@ -27,8 +28,11 @@ export default function HomeScreen() {
 
   const handleSendData = async () => {
     try {
-      await postData('/glycemias', { glycemicIndex: parseInt(glycemicIndex), data: date });
+      console.log('data: ', date)
+      await postData('/glycemias', { glycemicIndex: parseInt(glycemicIndex), creationDate: date });
+      Toast.success('Salvo com sucesso', 'top')
     } catch (error) {
+      Toast.error('Erro ao salvar', 'top')
       console.error('Erro ao enviar dados:', error);
     }
   };
@@ -51,6 +55,7 @@ export default function HomeScreen() {
           onChange={setDate}
         />
         <ButtonComponent children="Cadastrar" onPress={() => handleSendData()} />
+        <ToastManager />
       </View>
       <FooterComponent />
     </View>

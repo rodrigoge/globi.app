@@ -22,15 +22,24 @@ export default function InputMaskedComponent({
     };
 
     useEffect(() => {
-        const currentDateTime = getCurrentDateTime();
-        setInputValue(currentDateTime);
+        // Set initial date and time
+        setInputValue(getCurrentDateTime());
 
-        const [datePart, timePart] = currentDateTime.split(' ');
-        const [day, month, year] = datePart.split('/').map(Number);
-        const [hours, minutes, seconds] = timePart.split(':').map(Number);
-        const isoDate = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds)).toISOString();
-        onChange(isoDate);
-    }, []);
+        // Update date and time every second
+        const intervalId = setInterval(() => {
+            const currentDateTime = getCurrentDateTime();
+            setInputValue(currentDateTime);
+
+            const [datePart, timePart] = currentDateTime.split(' ');
+            const [day, month, year] = datePart.split('/').map(Number);
+            const [hours, minutes, seconds] = timePart.split(':').map(Number);
+            const isoDate = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds)).toISOString();
+            onChange(isoDate);
+        }, 1000); // Update every second
+
+        // Cleanup interval on component unmount
+        return () => clearInterval(intervalId);
+    }, [onChange]);
 
     const handleChange = (text: string) => {
         setInputValue(text);
