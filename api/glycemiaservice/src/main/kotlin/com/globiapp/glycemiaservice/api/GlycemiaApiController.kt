@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.time.OffsetDateTime
+import java.time.ZonedDateTime
 
 @RestController
 @RequestMapping("/glycemias")
@@ -27,7 +28,7 @@ class GlycemiaApiController(val glycemiaService: GlycemiaService) {
     }
 
     @GetMapping
-    fun getGlycemias(@RequestParam date: OffsetDateTime): List<Glycemia> {
+    fun getGlycemias(@RequestParam date: ZonedDateTime): List<Glycemia> {
         logger.info("GlycemiaApiController.getGlycemias - entering get glycemias")
         val response = glycemiaService.getGlycemias(date)
         logger.info("GlycemiaApiController.getGlycemias - exiting get glycemias")
