@@ -29,7 +29,7 @@ export default function FooterComponent() {
                 />
             </Link>
             <Link
-                href="/"
+                href="/calendar"
                 style={styles.link}
                 onPress={() => handleTabSelect('calendar')}
             >

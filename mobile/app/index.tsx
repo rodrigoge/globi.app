@@ -28,15 +28,12 @@ export default function HomeScreen() {
 
   const handleSendData = async () => {
     try {
-      console.log('data: ', date)
       await postData('/glycemias', { glycemicIndex: parseInt(glycemicIndex), creationDate: date });
       Toast.success('Salvo com sucesso', 'top')
     } catch (error) {
       Toast.error('Erro ao salvar', 'top')
-      console.error('Erro ao enviar dados:', error);
     }
   };
-
 
   return (
     <View style={styles.modal}>

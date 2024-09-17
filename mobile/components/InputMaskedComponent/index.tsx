@@ -22,10 +22,7 @@ export default function InputMaskedComponent({
     };
 
     useEffect(() => {
-        // Set initial date and time
         setInputValue(getCurrentDateTime());
-
-        // Update date and time every second
         const intervalId = setInterval(() => {
             const currentDateTime = getCurrentDateTime();
             setInputValue(currentDateTime);
@@ -35,9 +32,7 @@ export default function InputMaskedComponent({
             const [hours, minutes, seconds] = timePart.split(':').map(Number);
             const isoDate = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds)).toISOString();
             onChange(isoDate);
-        }, 1000); // Update every second
-
-        // Cleanup interval on component unmount
+        }, 1000);
         return () => clearInterval(intervalId);
     }, [onChange]);
 
