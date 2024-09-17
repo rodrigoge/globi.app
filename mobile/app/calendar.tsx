@@ -10,8 +10,18 @@ import { Calendar, LocaleConfig } from 'react-native-calendars';
 import colors from '@/colors';
 import { getData } from '@/service/api';
 import { Toast } from 'toastify-react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+type RootStackParamList = {
+    glycemias: { days: any };
+};
+
+type NavigationProps = NativeStackNavigationProp<RootStackParamList, 'glycemias'>;
 
 export default function CalendarScreen() {
+
+    const navigation = useNavigation<NavigationProps>();
 
     LocaleConfig.locales['pt-br'] = {
         monthNames: [
@@ -40,9 +50,12 @@ export default function CalendarScreen() {
 
     const handleGetData = async (day: any) => {
         try {
-            var registers = await getData('/glycemias?date=' + day);
+            console.log('day: ', day)
+            const registers = await getData('/glycemias?date=' + day);
+            console.log('registers: ', registers)
+            navigation.navigate('glycemias', { days: registers });
         } catch (error) {
-            Toast.error('Erro ao buscar', 'top')
+            Toast.error('Erro ao buscar', 'top');
         }
     };
 
@@ -94,6 +107,7 @@ export default function CalendarScreen() {
 const styles = StyleSheet.create({
     modal: {
         height: '100%',
+        backgroundColor: 'white'
     },
     calendar: {
         marginTop: 32
