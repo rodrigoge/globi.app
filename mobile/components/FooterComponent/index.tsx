@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         bottom: 0,
         zIndex: 999,
-        height: 90
+        height: 90,
+        backgroundColor: 'white'
     },
     link: {
         display: "flex",
