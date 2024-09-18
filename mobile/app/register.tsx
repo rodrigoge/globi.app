@@ -28,6 +28,7 @@ export default function RegisterScreen() {
     }, [loaded]);
 
     const handleSendData = async () => {
+        console.log("Date: ", date)
         try {
             await postData('/glycemias', { glycemicIndex: parseInt(glycemicIndex), creationDate: date });
             Toast.success('Salvo com sucesso', 'top')

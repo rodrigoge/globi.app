@@ -1,4 +1,3 @@
-import colors from '@/colors';
 import FooterComponent from '@/components/FooterComponent';
 import HeaderComponent from '@/components/HeaderComponent';
 import ItemComponent from '@/components/ItemComponent';
@@ -23,11 +22,21 @@ export default function Glycemias() {
     const route = useRoute<GlycemiasRouteProp>();
     const glycemias = route.params?.glycemias || [];
 
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString);
+        const day = String(date.getUTCDate()).padStart(2, '0');
+        const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+        const year = date.getUTCFullYear();
+        const hours = String(date.getUTCHours()).padStart(2, '0');
+        const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+        return `${day}/${month}/${year} ${hours}:${minutes}`;
+    };
+
     const renderItem = ({ item }: { item: Glycemia }) => (
         <View style={styles.card}>
             <ItemComponent
                 glycemicIndex={item.glycemicIndex}
-                creationDate={new Date(item.creationDate).toLocaleString()}
+                creationDate={formatDate(item.creationDate)}
             />
         </View>
     );
@@ -51,10 +60,10 @@ export default function Glycemias() {
 
 const styles = StyleSheet.create({
     modal: {
-        flex: 1,        
+        flex: 1,
     },
     items: {
-        paddingBottom: 180
+        paddingBottom: 180,
     },
     card: {
         width: '92%',
@@ -66,5 +75,5 @@ const styles = StyleSheet.create({
         width: '92%',
         marginTop: 10,
         alignSelf: 'center',
-    }
+    },
 });
