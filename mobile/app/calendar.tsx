@@ -14,8 +14,14 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type RootStackParamList = {
-    glycemias: { days: any };
+    glycemias: any;
 };
+
+interface Glycemia {
+    id: number;
+    glycemicIndex: number;
+    creationDate: string;
+}
 
 type NavigationProps = NativeStackNavigationProp<RootStackParamList, 'glycemias'>;
 
@@ -50,10 +56,8 @@ export default function CalendarScreen() {
 
     const handleGetData = async (day: any) => {
         try {
-            console.log('day: ', day)
-            const registers = await getData('/glycemias?date=' + day);
-            console.log('registers: ', registers)
-            navigation.navigate('glycemias', { days: registers });
+            const glycemias: Glycemia[] = await getData('/glycemias?date=' + day);
+            navigation.navigate('glycemias', { glycemias });
         } catch (error) {
             Toast.error('Erro ao buscar', 'top');
         }

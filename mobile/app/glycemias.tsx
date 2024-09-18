@@ -1,5 +1,5 @@
-import { Text, View } from "react-native";
-import { RouteProp } from '@react-navigation/native'; // Para tipagem de rota
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { Text, View } from 'react-native';
 
 interface Glycemia {
     id: number;
@@ -8,24 +8,26 @@ interface Glycemia {
 }
 
 type RootStackParamList = {
-    Glycemias: { days: Glycemia[] };
+    glycemias: { glycemias: Glycemia[] };
 };
 
-type GlycemiasScreenRouteProp = RouteProp<RootStackParamList, 'Glycemias'>;
+type GlycemiasRouteProp = RouteProp<RootStackParamList, 'glycemias'>;
 
-export default function Glycemias({ days }: { days: GlycemiasScreenRouteProp }) {
+export default function Glycemias() {
+    const route = useRoute<GlycemiasRouteProp>(); 
+    const glycemias = route.params?.glycemias || [];
 
     return (
         <View>
-            {Array.isArray(days) && days.length > 0 ? (
-                days.map((day: Glycemia, index: number) => (
+            {glycemias.length > 0 ? (
+                glycemias.map((glycemia: Glycemia, index: number) => (
                     <View key={index}>
-                        <Text>Índice Glicêmico: {day.glycemicIndex}</Text>
-                        <Text>Data de Criação: {new Date(day.creationDate).toLocaleString()}</Text>
+                        <Text>Índice Glicêmico: {glycemia.glycemicIndex}</Text>
+                        <Text>Data de Criação: {new Date(glycemia.creationDate).toLocaleString()}</Text>
                     </View>
                 ))
             ) : (
-                <Text>Nenhum dado encontrado.</Text>
+                <Text>Sem dados disponíveis</Text>
             )}
         </View>
     );
